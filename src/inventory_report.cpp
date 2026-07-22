@@ -17,6 +17,7 @@ bool isValidPrice(double price) {
 
 // Returns quantity multiplied by price, returns 0.0 if quantity or price is invalid
 double calculateItemValue(const InventoryItem& item) {
+    
     if (!isValidQuantity(item.quantity) || !isValidPrice(item.price)) {
         return 0.0;
     }
@@ -35,10 +36,12 @@ int readInventoryFile(string filename, InventoryItem items[], int maxItems) {
 
     int count = 0;
     string currentSku, currentName;
+    //Aidan: could space this out
     int currentQuantity;
     double currentPrice;
 
     while (count < maxItems && inputFile >> currentSku >> currentName >> currentQuantity >> currentPrice) {
+        
         items[count].sku = currentSku;
         items[count].name = currentName;
         items[count].quantity = currentQuantity;
@@ -66,7 +69,8 @@ bool writeInventoryReport(string filename, const InventoryItem items[], int coun
         double itemValue = calculateItemValue(items[i]);
         totalValue += itemValue;
 
-        outputFile << items[i].sku << " "
+        outputFile //Aidan: Same here
+                    << items[i].sku << " "
                    << items[i].name << " "
                    << items[i].quantity << " "
                    << items[i].price << " "
