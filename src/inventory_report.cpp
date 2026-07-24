@@ -39,12 +39,14 @@ int readInventoryFile(string filename, InventoryItem items[], int maxItems) {
     double currentPrice;
 
     while (count < maxItems && inputFile >> currentSku >> currentName >> currentQuantity >> currentPrice) {
-        items[count].sku = currentSku;
-        items[count].name = currentName;
-        items[count].quantity = currentQuantity;
-        items[count].price = currentPrice;
+        if (isValidQuantity(currentQuantity) && isValidPrice(currentPrice)) {
+            items[count].sku = currentSku;
+            items[count].name = currentName;
+            items[count].quantity = currentQuantity;
+            items[count].price = currentPrice;
 
-        count++;
+            count++;
+        }
     }
 
     inputFile.close();
@@ -122,8 +124,10 @@ int findHighestValueItemIndex(const InventoryItem items[], int count) {
     int highestIndex = 0;
 
     for (int i = 1; i < count; i++) {
-        if (calculateItemValue(items[i]) > highest) {
-            highest = calculateItemValue(items[i]);
+        double currentValue = calculateItemValue(items[i]);
+
+        if (currentValue > highest) {
+            highest = currentValue;
             highestIndex = i;
         }
     }
